@@ -2,15 +2,28 @@ const express = require('express');
 const { Note } = require('../../db/models');
 const noteRouter = express.Router();
 const { verifyAccessToken } = require('../middlewares/verifyTokens');
+const { Op } = require('sequelize');
 
 noteRouter
   .route('/')
   .get(async (req, res) => {
     try {
-      const notes = await Note.findAll({ order: [['id', 'DESC']] });
-      res.json(notes);
+      const { search } = req.query;
+      if (search && search.length !== 0) {
+        const notes = await Note.findAll({
+          where: {
+            title: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+        });
+        res.json(notes);
+      } else {
+        const result = await Note.findAll();
+        res.json(result);
+      }
     } catch (error) {
-      res.status(500).json({ message: 'Ошибка сервера' });
+      res.status(500).json({ message: error.message });
       console.log(error);
     }
   })
@@ -20,8 +33,7 @@ noteRouter
       const { title, body, tags, notebookId } = req.body;
       if (!title || !body || !tags || !notebookId) {
         return res.status(400).json({
-          message:
-            'Пожалуйста, заполните все обязательные поля (title, body, notebookId, tags).',
+          message: 'Заполните все обязательные поля!',
         });
       }
 
@@ -29,13 +41,13 @@ noteRouter
         title,
         body,
         tags,
-        notebookId,
+        notebookId: Number(notebookId),
         userId,
       });
 
       return res.status(201).json(newNote);
     } catch (error) {
-      res.status(500).json({ message: 'Ошибка сервера при создании заметки' });
+      res.status(500).json({ message: error.message });
       console.error(error);
     }
   });
@@ -55,7 +67,7 @@ noteRouter
       console.log(error);
     }
   })
-  .put(verifyAccessToken, async (req, res) => {
+  .put(async (req, res) => {
     try {
       const { id } = req.params;
       const { title, body, tags, notebookId } = req.body;
@@ -67,7 +79,7 @@ noteRouter
       note.title = title;
       note.body = body;
       note.tags = tags;
-      note.notebookId = notebookId;
+      note.notebookId = Number(notebookId);
       await note.save();
       res.json(note);
     } catch (error) {
@@ -75,7 +87,7 @@ noteRouter
       console.log(error);
     }
   })
-  .delete(verifyAccessToken, async (req, res) => {
+  .delete(async (req, res) => {
     const { id } = req.params;
     try {
       const note = await Note.findByPk(id);

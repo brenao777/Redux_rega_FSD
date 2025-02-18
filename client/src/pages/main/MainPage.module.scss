@@ -1,0 +1,32 @@
+* {
+  @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  font-family: 'Tinos', Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #ebebeb;
+}
+
+h1 {
+  font-family: 'Tinos', serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.containter {
+  margin-top: 20px;
+}
+
+.notesTitle {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin-top: 5vh;
+  
+}
+
+.notebooksTitle {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+}

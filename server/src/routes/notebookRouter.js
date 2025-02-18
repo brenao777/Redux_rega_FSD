@@ -1,15 +1,16 @@
 const express = require('express');
 const { verifyAccessToken } = require('../middlewares/verifyTokens');
 const { Notebook, Note } = require('../../db/models');
-const { where } = require('sequelize');
 const notebookRouter = express.Router();
 
 notebookRouter
   .route('/')
   .get(async (req, res) => {
     try {
+      // const userId = res.locals.user.id
       const notebooks = await Notebook.findAll({
         order: [['id', 'DESC']],
+        // where: { userId },
         include: {
           model: Note,
           attributes: ['id', 'title', 'body', 'tags', 'notebookId', 'userId'],
@@ -37,7 +38,7 @@ notebookRouter
   });
 
 notebookRouter
-  .route('/:notebookId')
+  .route('/:id')
   .delete(verifyAccessToken, async (req, res) => {
     try {
       const { notebookId } = req.params;

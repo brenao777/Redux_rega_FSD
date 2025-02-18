@@ -1,10 +1,10 @@
 import type { RootState } from '../../../app/store/store';
+import { fetchUser, loginHandler, logoutHandler, submitHandler } from '../redux/userThunks';
 import { useEffect } from 'react';
-import { fetchUser, loginHandler, logoutHandler, submitHandler } from '../lib/userThunks';
-import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
-import type { LoginCredentials, RegisterFormData, UseUserReturnType } from '../types';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks';
 
-export const useUser = (): UseUserReturnType => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const useUser = () => {
   const dispatch = useAppDispatch();
   const { data, status, error } = useAppSelector((state: RootState) => state.user);
 
@@ -13,10 +13,10 @@ export const useUser = (): UseUserReturnType => {
   }, [dispatch]);
 
   return {
-    user: { data, status, error },
+    user: { data, status },
     error,
-    loginHandler: (loginData: LoginCredentials) => dispatch(loginHandler(loginData)),
+    loginHandler: (loginData: FormData) => dispatch(loginHandler(loginData)),
     logoutHandler: () => dispatch(logoutHandler()),
-    submitHandler: (registerData: RegisterFormData) => dispatch(submitHandler(registerData)),
+    submitHandler: (registerData: FormData) => dispatch(submitHandler(registerData)),
   };
 };

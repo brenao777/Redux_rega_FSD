@@ -1,0 +1,21 @@
+.container {
+  max-width: 500px; // Максимальная ширина формы
+  margin: auto; // Центрирование формы
+  margin-top: 15vh;
+  padding: 20px; // Отступы вокруг формы
+  border: 1px solid #ccc; // Граница формы
+  border-radius: 8px; // Закругленные углы
+  background-color: #f9f9f9; // Фоновый цвет
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.button {
+    width: 100%;
+    margin-top: 20px;
+}

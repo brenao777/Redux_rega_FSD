@@ -1,0 +1,1 @@
+export {default as editModal} from './ui/EditModal'

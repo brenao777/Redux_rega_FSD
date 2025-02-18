@@ -1,0 +1,11 @@
+.containter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5vh;
+    margin-top: 5vh;
+}
+
+.notebooks {
+    max-height: 100px;
+}

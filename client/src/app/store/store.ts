@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../../entities/user/model/userSlice';
-import noteReducer from '../../entities/note/model/noteSlice'
+import noteReducer from '@/entities/note/redux/noteSlice';
+import notebookReducer from '@/entities/notebook/redux/notebookSlice';
+import userReducer from '@/entities/user/redux/userSlice';
 
 export const store = configureStore({
   reducer: {
+    notes: noteReducer,
     user: userReducer,
-    note: noteReducer
+    notebooks: notebookReducer,
   },
 });
 

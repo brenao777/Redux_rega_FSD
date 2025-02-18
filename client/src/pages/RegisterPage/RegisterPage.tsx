@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAppDispatch } from '../../shared/hooks';
-import type { RegisterFormData } from '../../entities/user/types';
-import { registerSchema } from '../../entities/user/types';
-import { submitHandler } from '../../entities/user/lib/userThunks';
+import { useAppDispatch } from '@/shared';
+import type { RegisterFormData } from '@/entities/user/model/types/types';
+import { registerSchema } from '@/entities/user/model/schema/schema';
+import { submitHandler } from '@/entities/user/redux/userThunks';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styles from './RegisterPage.module.scss';
@@ -29,6 +29,7 @@ export default function RegisterPage(): React.JSX.Element {
 
   return (
     <main className={styles.main}>
+      <h1 className={styles.title}>Регистрация</h1>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <input className={styles.input} type="text" {...register('name')} placeholder="Имя..." />
         {errors.name && <p className={styles.text}>{errors.name.message}</p>}
